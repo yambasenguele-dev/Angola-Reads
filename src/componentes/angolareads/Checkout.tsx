@@ -141,10 +141,14 @@ export default function Checkout() {
     }
 
     // Validações
-    const precisaComprovativo =
-      metodoPagamento === 'transferencia_bancaria' || metodoPagamento === 'airtm'
+    // Comprovativo só é obrigatório para Airtm. Na transferência bancária o
+    // cliente só vê os dados bancários depois de o pedido ser criado, logo
+    // ainda não tem como enviar o comprovativo nesta fase.
+    const precisaComprovativoObrigatorio = metodoPagamento === 'airtm'
+    const podeEnviarComprovativoAgora =
+      metodoPagamento === 'airtm' || metodoPagamento === 'transferencia_bancaria'
 
-    if (precisaComprovativo && !ficheiroComprovativo) {
+    if (precisaComprovativoObrigatorio && !ficheiroComprovativo) {
       toast.error('Comprovativo obrigatório', {
         description: 'Por favor, carrega o teu comprovativo de pagamento.',
       })
@@ -164,7 +168,7 @@ export default function Checkout() {
       let urlComprovativo: string | null = null
 
       // Passo 1: Upload do comprovativo (se necessário)
-      if (precisaComprovativo && ficheiroComprovativo) {
+      if (podeEnviarComprovativoAgora && ficheiroComprovativo) {
         definirACarregarUpload(true)
         try {
           const formularioUpload = new FormData()
@@ -255,15 +259,13 @@ export default function Checkout() {
     )
   }
 
-  // Detalhes do método de pagamento selecionado
-  const precisaComprovativo =
-    metodoPagamento === 'transferencia_bancaria' || metodoPagamento === 'airtm'
-
   const textoBotaoEnviar = aEnviarPedido
     ? aCarregarUpload
       ? 'A carregar comprovativo...'
       : 'A enviar pedido...'
-    : 'Enviar Pedido'
+    : metodoPagamento === 'transferencia_bancaria'
+      ? 'Confirmar pedido e ver dados bancários'
+      : 'Enviar Pedido'
 
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
@@ -291,11 +293,55 @@ export default function Checkout() {
             </p>
           </div>
 
+          {metodoPagamento === 'transferencia_bancaria' && (
+            <div className="rounded-xl bg-gray-50 p-5">
+              <h3 className="mb-4 text-sm font-semibold text-gray-700">
+                Dados para Transferência Bancária
+              </h3>
+              <div className="space-y-3">
+                <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
+                  <span className="text-xs font-medium text-gray-500">Banco</span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    {DADOS_BANCARIOS.banco}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
+                  <span className="text-xs font-medium text-gray-500">IBAN</span>
+                  <span className="break-all text-sm font-mono font-semibold text-gray-900">
+                    {DADOS_BANCARIOS.iban}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
+                  <span className="text-xs font-medium text-gray-500">Titular</span>
+                  <span className="text-right text-sm font-semibold text-gray-900">
+                    {DADOS_BANCARIOS.titular}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
+                  <span className="text-xs font-medium text-gray-500">Nº da Conta</span>
+                  <span className="text-sm font-mono font-semibold text-gray-900">
+                    {DADOS_BANCARIOS.conta}
+                  </span>
+                </div>
+              </div>
+              <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                <p className="text-xs text-amber-700">
+                  Usa a referência <strong>{referenciaPedido}</strong> na descrição da
+                  transferência. Depois, envia o comprovativo para{' '}
+                  <strong>angolareads@gmail.com</strong> (ou pela página de Suporte) para
+                  liberarmos o teu download.
+                </p>
+              </div>
+            </div>
+          )}
+
           <div className="rounded-lg bg-amber-50 p-3">
             <p className="text-center text-xs text-amber-700">
               {metodoPagamento === 'paypal'
                 ? 'Após o pagamento no PayPal, o teu pedido será confirmado manualmente.'
-                : 'O teu pedido será confirmado após a verificação do comprovativo.'}
+                : metodoPagamento === 'transferencia_bancaria'
+                  ? 'O teu pedido será confirmado após a verificação do comprovativo enviado por email.'
+                  : 'O teu pedido será confirmado após a verificação do comprovativo.'}
             </p>
           </div>
 
@@ -446,36 +492,16 @@ export default function Checkout() {
                   className="mt-5"
                 >
                   {metodoPagamento === 'transferencia_bancaria' && (
-                    <div className="rounded-xl bg-gray-50 p-5">
-                      <h3 className="mb-4 text-sm font-semibold text-gray-700">
-                        Dados para Transferência Bancária
+                    <div className="rounded-xl border border-emerald-100 bg-emerald-50/60 p-5">
+                      <h3 className="mb-2 text-sm font-semibold text-gray-700">
+                        Transferência Bancária
                       </h3>
-                      <div className="space-y-3">
-                        <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
-                          <span className="text-xs font-medium text-gray-500">Banco</span>
-                          <span className="text-sm font-semibold text-gray-900">
-                            {DADOS_BANCARIOS.banco}
-                          </span>
-                        </div>
-                        <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
-                          <span className="text-xs font-medium text-gray-500">IBAN</span>
-                          <span className="break-all text-sm font-mono font-semibold text-gray-900">
-                            {DADOS_BANCARIOS.iban}
-                          </span>
-                        </div>
-                        <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
-                          <span className="text-xs font-medium text-gray-500">Titular</span>
-                          <span className="text-right text-sm font-semibold text-gray-900">
-                            {DADOS_BANCARIOS.titular}
-                          </span>
-                        </div>
-                        <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
-                          <span className="text-xs font-medium text-gray-500">Nº da Conta</span>
-                          <span className="text-sm font-mono font-semibold text-gray-900">
-                            {DADOS_BANCARIOS.conta}
-                          </span>
-                        </div>
-                      </div>
+                      <p className="text-xs leading-relaxed text-gray-600">
+                        Ao confirmares o pedido, vais ver os dados bancários e a
+                        referência do pedido. Usa essa referência na descrição da
+                        transferência. Depois envia o comprovativo pelo suporte para
+                        liberarmos o download.
+                      </p>
                     </div>
                   )}
 
@@ -527,8 +553,9 @@ export default function Checkout() {
               </CardContent>
             </Card>
 
-            {/* Upload do Comprovativo */}
-            {precisaComprovativo && (
+            {/* Upload do Comprovativo (não aplicável à transferência bancária,
+                cujo comprovativo é enviado depois, após ver os dados bancários) */}
+            {metodoPagamento === 'airtm' && (
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
