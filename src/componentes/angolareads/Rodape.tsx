@@ -129,7 +129,7 @@ export default function Rodape() {
                   className="flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-emerald-600"
                 >
                   <Mail className="h-4 w-4 shrink-0" />
-                  <span>angolareads@gmail.com</span>
+                  <span>suporte.angolareads@gmail.com</span>
                 </a>
                 <p className="text-sm text-gray-500">
                   Suporte via WhatsApp: usa o botão flutuante no canto do ecrã.
