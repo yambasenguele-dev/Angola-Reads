@@ -233,7 +233,13 @@ const configuracaoVazia: ConfiguracaoSistema = {
 // ============================================================
 
 export default function PainelAdmin() {
-  const { eAdmin, carregando: carregandoAuth, sair } = usarAutenticacao()
+  const {
+  eAdmin,
+  carregando: carregandoAuth,
+  sair,
+  definirUtilizador,
+  definirCarregando,
+} = usarAutenticacao()
 
   // Estados de dados
   const [produtos, definirProdutos] = useState<Produto[]>([])
@@ -286,6 +292,26 @@ export default function PainelAdmin() {
     'Content-Type': 'application/json',
   }), [])
 
+    // Inicializar sessão nesta rota (a home faz isto; o admin também precisa)
+  useEffect(() => {
+    async function verificarSessao() {
+      try {
+        const resposta = await fetch('/api/auth/perfil')
+        if (resposta.ok) {
+          const dados = await resposta.json()
+          definirUtilizador(dados.utilizador ?? null)
+        } else {
+          definirUtilizador(null)
+        }
+      } catch {
+        definirUtilizador(null)
+      } finally {
+        definirCarregando(false)
+      }
+    }
+    verificarSessao()
+  }, [definirUtilizador, definirCarregando])
+  
   // Carregar dados iniciais (apenas se administrador)
   useEffect(() => {
     if (!carregandoAuth && eAdmin()) {
