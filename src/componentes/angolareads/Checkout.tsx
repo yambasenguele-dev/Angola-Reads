@@ -50,7 +50,7 @@ const DADOS_AIRTM = {
 }
 
 const DADOS_PAYPAL = {
-  email: 'reciprocidade001@gmail.com',
+  email: 'suporte.angolareads@gmail.com',
 }
 
 // Tipo do método de pagamento
