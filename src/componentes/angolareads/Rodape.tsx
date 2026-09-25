@@ -147,9 +147,9 @@ export default function Rodape() {
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md">
                     <img
-                      src="/logos/millennium-atlantico.svg"
+                      src="/logos/millennium-atlantico.png"
                       alt="Millennium Atlântico"
-                      className="h-8 w-8"
+                      className="h-8 w-8 object-cover"
                     />
                   </div>
                   <span className="text-sm font-medium text-gray-600">
@@ -161,9 +161,9 @@ export default function Rodape() {
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md">
                     <img
-                      src="/logos/airtm.svg"
+                      src="/logos/airtm.png"
                       alt="Airtm"
-                      className="h-8 w-8"
+                      className="h-8 w-8 object-cover"
                     />
                   </div>
                   <span className="text-sm font-medium text-gray-600">
