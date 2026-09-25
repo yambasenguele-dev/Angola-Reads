@@ -4,8 +4,6 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import {
   CreditCard,
-  Building2,
-  Wallet,
   Upload,
   CheckCircle2,
   BookOpen,
@@ -417,7 +415,12 @@ export default function Checkout() {
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <Building2 className="h-4 w-4 text-emerald-600" />
+                        <img
+                          src="/logos/millennium-atlantico.svg"
+                          alt=""
+                          className="h-5 w-5 rounded"
+                          aria-hidden="true"
+                        />
                         <span className="text-sm font-semibold text-gray-900">
                           Transferência Bancária (Millennium Atlântico)
                         </span>
@@ -444,7 +447,12 @@ export default function Checkout() {
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <Wallet className="h-4 w-4 text-emerald-600" />
+                        <img
+                          src="/logos/airtm.svg"
+                          alt=""
+                          className="h-5 w-5 rounded"
+                          aria-hidden="true"
+                        />
                         <span className="text-sm font-semibold text-gray-900">
                           Airtm (USD/EUR)
                         </span>
@@ -471,7 +479,12 @@ export default function Checkout() {
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <CreditCard className="h-4 w-4 text-emerald-600" />
+                        <img
+                          src="/logos/paypal.svg"
+                          alt=""
+                          className="h-4 w-4"
+                          aria-hidden="true"
+                        />
                         <span className="text-sm font-semibold text-gray-900">
                           PayPal
                         </span>
