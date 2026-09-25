@@ -20,6 +20,7 @@ import PaginaSobre from '@/componentes/angolareads/PaginaSobre'
 import PaginaTermos from '@/componentes/angolareads/PaginaTermos'
 import PaginaPrivacidade from '@/componentes/angolareads/PaginaPrivacidade'
 import PaginaSuporte from '@/componentes/angolareads/PaginaSuporte'
+import BotaoWhatsAppFlutuante from '@/componentes/angolareads/BotaoWhatsAppFlutuante'
 
 // Mapa de vistas do SPA - cada vista é renderizada com base na navegação
 const mapaVistas: Record<TipoVista, React.ComponentType> = {
@@ -74,6 +75,7 @@ export default function PaginaPrincipal() {
         <ComponenteVista key={vistaAtual} />
       </main>
       <Rodape />
+      <BotaoWhatsAppFlutuante />
     </div>
   )
 }
