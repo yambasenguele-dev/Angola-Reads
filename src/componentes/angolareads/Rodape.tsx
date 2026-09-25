@@ -4,11 +4,6 @@ import { motion } from 'framer-motion'
 import {
   BookOpen,
   Mail,
-  Phone,
-  MessageCircle,
-  CreditCard,
-  Wallet,
-  Banknote,
   Home,
   Info,
   FileText,
@@ -72,6 +67,7 @@ const linksNavegacao = [
 
 export default function Rodape() {
   const navegarPara = usarNavegacao((s) => s.navegarPara)
+  const anoActual = new Date().getFullYear()
 
   return (
     <footer className="mt-auto w-full">
@@ -135,15 +131,9 @@ export default function Rodape() {
                   <Mail className="h-4 w-4 shrink-0" />
                   <span>angolareads@gmail.com</span>
                 </a>
-                <a
-                  href="https://wa.me/244947399578"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-emerald-600"
-                >
-                  <MessageCircle className="h-4 w-4 shrink-0" />
-                  <span>+244 947399578 (WhatsApp)</span>
-                </a>
+                <p className="text-sm text-gray-500">
+                  Suporte via WhatsApp: usa o botão flutuante no canto do ecrã.
+                </p>
               </div>
             </div>
 
@@ -155,8 +145,12 @@ export default function Rodape() {
               <div className="flex flex-col gap-3">
                 {/* Millennium Atlântico */}
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-50">
-                    <Banknote className="h-4 w-4 text-blue-600" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md">
+                    <img
+                      src="/logos/millennium-atlantico.svg"
+                      alt="Millennium Atlântico"
+                      className="h-8 w-8"
+                    />
                   </div>
                   <span className="text-sm font-medium text-gray-600">
                     Millennium Atlântico
@@ -165,8 +159,12 @@ export default function Rodape() {
 
                 {/* Airtm */}
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sky-50">
-                    <Wallet className="h-4 w-4 text-sky-600" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md">
+                    <img
+                      src="/logos/airtm.svg"
+                      alt="Airtm"
+                      className="h-8 w-8"
+                    />
                   </div>
                   <span className="text-sm font-medium text-gray-600">
                     Airtm
@@ -175,8 +173,12 @@ export default function Rodape() {
 
                 {/* PayPal */}
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-amber-50">
-                    <CreditCard className="h-4 w-4 text-amber-600" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gray-50">
+                    <img
+                      src="/logos/paypal.svg"
+                      alt="PayPal"
+                      className="h-5 w-5"
+                    />
                   </div>
                   <span className="text-sm font-medium text-gray-600">
                     PayPal
@@ -211,7 +213,7 @@ export default function Rodape() {
       {/* Barra inferior de direitos autorais */}
       <div className="border-t border-emerald-100 bg-emerald-800 py-4">
         <p className="text-center text-sm text-emerald-100">
-          © 2024 AngolaReads. Todos os direitos reservados.
+          © {anoActual} AngolaReads. Todos os direitos reservados.
         </p>
       </div>
     </footer>
