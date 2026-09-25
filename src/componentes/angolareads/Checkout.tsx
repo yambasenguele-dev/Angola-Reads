@@ -416,9 +416,9 @@ export default function Checkout() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <img
-                          src="/logos/millennium-atlantico.svg"
+                          src="/logos/millennium-atlantico.png"
                           alt=""
-                          className="h-5 w-5 rounded"
+                          className="h-5 w-5 rounded object-cover"
                           aria-hidden="true"
                         />
                         <span className="text-sm font-semibold text-gray-900">
@@ -448,9 +448,9 @@ export default function Checkout() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <img
-                          src="/logos/airtm.svg"
+                          src="/logos/airtm.png"
                           alt=""
-                          className="h-5 w-5 rounded"
+                          className="h-5 w-5 rounded object-cover"
                           aria-hidden="true"
                         />
                         <span className="text-sm font-semibold text-gray-900">
