@@ -16,12 +16,10 @@ import FormularioLogin from '@/componentes/angolareads/FormularioLogin'
 import FormularioRegisto from '@/componentes/angolareads/FormularioRegisto'
 import RecuperarSenha from '@/componentes/angolareads/RecuperarSenha'
 import PainelAfiliado from '@/componentes/angolareads/PainelAfiliado'
-import PainelPublisher from '@/componentes/angolareads/PainelPublisher'
 import PaginaSobre from '@/componentes/angolareads/PaginaSobre'
 import PaginaTermos from '@/componentes/angolareads/PaginaTermos'
 import PaginaPrivacidade from '@/componentes/angolareads/PaginaPrivacidade'
 import PaginaSuporte from '@/componentes/angolareads/PaginaSuporte'
-import PaginaFAQ from '@/componentes/angolareads/PaginaFAQ'
 import BotaoWhatsAppFlutuante from '@/componentes/angolareads/BotaoWhatsAppFlutuante'
 import { capturarRefDaQuery } from '@/lib/afiliado-ref'
 
@@ -36,12 +34,10 @@ const mapaVistas: Record<TipoVista, React.ComponentType> = {
   registo: FormularioRegisto,
   'recuperar-senha': RecuperarSenha,
   afiliado: PainelAfiliado,
-  publisher: PainelPublisher,
   sobre: PaginaSobre,
   termos: PaginaTermos,
   privacidade: PaginaPrivacidade,
   suporte: PaginaSuporte,
-  faq: PaginaFAQ,
 }
 
 export default function PaginaPrincipal() {
