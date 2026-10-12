@@ -158,7 +158,7 @@ export async function POST(requisicao: NextRequest) {
     if (erroItens) throw erroItens
 
     // Se já vier um comprovativo (upload feito antes de criar o pedido)
-    if (corpo.comprovativoUrl) {
+    if (corpo.comprovativoUrl && corpo.comprovativoUrl.startsWith(`${perfil.id}/`)) {
       await supabase.from('comprovativos').insert({
         pedido_id: pedido.id,
         ficheiro_url: corpo.comprovativoUrl,
