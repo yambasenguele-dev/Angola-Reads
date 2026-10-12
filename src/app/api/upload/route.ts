@@ -93,9 +93,11 @@ export async function POST(requisicao: NextRequest) {
       if (!utilizador) {
         return NextResponse.json({ erro: 'Não autenticado' }, { status: 401 })
       }
-      if (!EXTENSOES_IMAGEM.includes(extensao) || !TIPOS_MIME_IMAGEM.includes(ficheiro.type)) {
+      const extensoesComprovativo = ['.jpg', '.jpeg', '.png', '.webp', '.pdf']
+      const tiposComprovativo = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
+      if (!extensoesComprovativo.includes(extensao) || !tiposComprovativo.includes(ficheiro.type)) {
         return NextResponse.json(
-          { erro: 'Formato de imagem inválido. Apenas JPG, PNG, WEBP e GIF são aceites.' },
+          { erro: 'Formato inválido. Envia uma imagem (JPG, PNG, WEBP) ou um PDF.' },
           { status: 400 }
         )
       }
