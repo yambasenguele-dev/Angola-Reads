@@ -157,8 +157,8 @@ Estes termos constituem o acordo integral entre o utilizador e a AngolaReads em 
     icone: Phone,
     conteudo: `Para questões relacionadas com estes Termos de Uso, ou para qualquer outra questão sobre a plataforma AngolaReads, pode entrar em contacto connosco através dos seguintes canais:
 
-• Email: angolareads@gmail.com
-• WhatsApp: +244 947399578
+• Email: suporte.angolareads@gmail.com
+• WhatsApp: +244 956228902
 • Horário de atendimento: Segunda a Sexta-feira, das 08:00 às 18:00 (horário de Luanda)
 
 Reservamo-nos o direito de responder às solicitações num prazo razoável, geralmente dentro de 24 a 48 horas úteis.`,
