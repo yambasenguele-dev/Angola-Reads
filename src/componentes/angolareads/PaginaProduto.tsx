@@ -13,14 +13,21 @@ import {
   Download,
   Link2,
   Copy,
-  Lock,
   TrendingUp,
+  ChevronDown,
+  HelpCircle,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { toast } from 'sonner'
 import { usarNavegacao } from '@/lojas/navegacao'
 import { usarCarrinho, type ItemCarrinho } from '@/lojas/carrinho'
@@ -53,6 +60,35 @@ interface ProdutoDetalhe {
   comissaoAfiliado: number
 }
 
+// Perguntas frequentes (alinhadas com os Termos e a página de Suporte)
+const PERGUNTAS_FREQUENTES: { pergunta: string; resposta: string }[] = [
+  {
+    pergunta: 'Como é que pago o meu pedido?',
+    resposta:
+      'Podes pagar por transferência bancária, Airtm ou PayPal. Ao confirmares o pedido na transferência bancária, mostramos-te o IBAN, o titular, o valor a pagar e a referência do pedido, que deves colocar na descrição da transferência.',
+  },
+  {
+    pergunta: 'Quando posso descarregar o ebook?',
+    resposta:
+      'O download só fica disponível depois de confirmarmos o pagamento. A confirmação é feita manualmente pela nossa equipa, normalmente dentro de 24 horas. Quando for aprovada, recebes um email e o ebook aparece em "Os Meus Ebooks".',
+  },
+  {
+    pergunta: 'Qual a diferença entre PDF e EPUB?',
+    resposta:
+      'O PDF mantém a paginação original e abre em praticamente qualquer telemóvel ou computador. O EPUB adapta o texto ao tamanho do ecrã e é ideal para leitores de ebooks e aplicações de leitura. Se estiverem ambos disponíveis, podes levar os dois formatos.',
+  },
+  {
+    pergunta: 'Posso pedir reembolso?',
+    resposta:
+      'Por regra, não há reembolso depois de o ficheiro ter sido descarregado. Se tiveres um problema com o ficheiro, contacta-nos em até 7 dias úteis com a referência do pedido e tentaremos resolver primeiro, por exemplo reenviando o ficheiro correcto. Os detalhes estão nos Termos e na página de Suporte.',
+  },
+  {
+    pergunta: 'Já paguei mas o ebook não aparece. O que faço?',
+    resposta:
+      'Confirma que colocaste a referência do pedido na descrição da transferência e envia-nos o comprovativo para angolareads@gmail.com ou pelo WhatsApp +244 947 399 578, indicando a referência do pedido.',
+  },
+]
+
 // Etiquetas amigáveis para tipos
 const etiquetasTipo: Record<string, string> = {
   ebook: 'Ebook',
@@ -80,6 +116,7 @@ export default function PaginaProduto() {
   const [formatoSelecionado, setFormatoSelecionado] = useState<TipoFormato>('pdf')
   const [formatosAdicionados, setFormatosAdicionados] = useState<Set<TipoFormato>>(new Set())
   const [linkCopiado, setLinkCopiado] = useState(false)
+  const [mostrarAfiliacao, setMostrarAfiliacao] = useState(false)
 
   // Verificar se um formato já está no carrinho
   const estaNoCarrinho = useCallback(
@@ -102,6 +139,7 @@ export default function PaginaProduto() {
   // Buscar detalhes do produto
   useEffect(() => {
     if (!parametroId) return
+    setMostrarAfiliacao(false)
 
     const buscarProduto = async () => {
       setCarregando(true)
@@ -170,6 +208,18 @@ export default function PaginaProduto() {
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(linkAfiliado)}`,
       '_blank'
     )
+  }
+
+  // Clique em "Afiliar-me a este produto"
+  const lidarCliqueAfiliacao = () => {
+    if (!estaAutenticado()) {
+      toast.info('Inicia sessão para te afiliares', {
+        description: 'Precisas de ter conta para ganhares comissão neste ebook.',
+      })
+      navegarPara('login')
+      return
+    }
+    setMostrarAfiliacao((aberto) => !aberto)
   }
 
   // Adicionar ao carrinho
@@ -467,114 +517,108 @@ export default function PaginaProduto() {
               )}
             </div>
 
-            {/* Programa de Afiliados */}
+            {/* Programa de Afiliados (recolhido por defeito) */}
             {temComissaoAfiliado && (
-              <>
-                <Separator className="my-6" />
-                <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4 sm:p-5">
-                  <div className="mb-3 flex items-center gap-2">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100">
-                      <TrendingUp className="h-4 w-4 text-emerald-700" />
-                    </div>
-                    <h3 className="text-sm font-semibold text-gray-900">
-                      Ganha a vender este ebook
-                    </h3>
-                  </div>
+              <div className="mt-4">
+                <button
+                  type="button"
+                  onClick={lidarCliqueAfiliacao}
+                  aria-expanded={mostrarAfiliacao}
+                  aria-controls="painel-afiliacao"
+                  className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                >
+                  <TrendingUp className="h-4 w-4" />
+                  Afiliar-me a este produto
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${mostrarAfiliacao ? 'rotate-180' : ''}`}
+                  />
+                </button>
 
-                  {!estaAutenticado() ? (
-                    // Não autenticado — bloco discreto com CTA
-                    <div>
-                      <p className="mb-3 text-sm text-gray-600">
-                        Afiliados ganham até <strong>{produto.comissaoAfiliado}%</strong> de
-                        comissão por cada venda confirmada. Torna-te afiliado e ganha comissão
-                        neste ebook.
-                      </p>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => navegarPara('login')}
-                        className="border-emerald-300 text-emerald-700 hover:bg-emerald-100"
-                      >
-                        <Lock className="mr-1.5 h-3.5 w-3.5" />
-                        Iniciar sessão para participar
-                      </Button>
-                    </div>
-                  ) : !eAfiliado() ? (
-                    // Autenticado mas ainda não é afiliado
-                    <div>
-                      <p className="mb-3 text-sm text-gray-600">
-                        Este ebook paga <strong>{produto.comissaoAfiliado}%</strong> de comissão
-                        (≈ {formatarPreco(valorComissaoEstimado)} por venda). Ativa o Programa de
-                        Afiliados para começares a ganhar.
-                      </p>
-                      <Button
-                        size="sm"
-                        onClick={() => navegarPara('afiliado')}
-                        className="bg-emerald-600 hover:bg-emerald-700"
-                      >
-                        Tornar-me afiliado
-                      </Button>
-                    </div>
-                  ) : (
-                    // Autenticado e já é afiliado — link pessoal deste produto
-                    <div>
-                      <p className="mb-3 text-sm text-gray-700">
-                        Ganhas <strong>{produto.comissaoAfiliado}%</strong> (≈{' '}
-                        <strong>{formatarPreco(valorComissaoEstimado)}</strong>) por cada venda
-                        confirmada através do teu link.
-                      </p>
+                {mostrarAfiliacao && estaAutenticado() && (
+                  <motion.div
+                    id="painel-afiliacao"
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="mt-2 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4 sm:p-5"
+                  >
+                    {!eAfiliado() ? (
+                      // Autenticado mas ainda não é afiliado
+                      <div>
+                        <p className="mb-3 text-sm text-gray-600">
+                          Para ganhares comissão neste ebook, primeiro tens de ativar o
+                          Programa de Afiliados. Depois, voltas aqui e copias o teu link.
+                        </p>
+                        <Button
+                          size="sm"
+                          onClick={() => navegarPara('afiliado')}
+                          className="bg-emerald-600 hover:bg-emerald-700"
+                        >
+                          Tornar-me afiliado
+                        </Button>
+                      </div>
+                    ) : (
+                      // Já é afiliado — comissão e link pessoal deste produto
+                      <div>
+                        <p className="mb-3 text-sm text-gray-700">
+                          Ganhas <strong>{produto.comissaoAfiliado}%</strong> (≈{' '}
+                          <strong>{formatarPreco(valorComissaoEstimado)}</strong>) por cada
+                          venda confirmada através do teu link.
+                        </p>
 
-                      <div className="flex flex-col gap-2 sm:flex-row">
-                        <div className="relative flex-1">
-                          <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                          <Input
-                            readOnly
-                            value={linkAfiliado}
-                            onFocus={(e) => e.currentTarget.select()}
-                            className="truncate rounded-lg border-emerald-200 bg-white pl-9 text-xs text-gray-600 sm:text-sm"
-                          />
+                        <div className="flex flex-col gap-2 sm:flex-row">
+                          <div className="relative flex-1">
+                            <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                            <Input
+                              readOnly
+                              value={linkAfiliado}
+                              onFocus={(e) => e.currentTarget.select()}
+                              className="truncate rounded-lg border-emerald-200 bg-white pl-9 text-xs text-gray-600 sm:text-sm"
+                            />
+                          </div>
+                          <Button
+                            size="sm"
+                            onClick={copiarLinkAfiliado}
+                            disabled={!linkAfiliado}
+                            className="shrink-0 bg-emerald-600 hover:bg-emerald-700"
+                          >
+                            {linkCopiado ? (
+                              <>
+                                <Check className="mr-1.5 h-4 w-4" />
+                                Copiado
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="mr-1.5 h-4 w-4" />
+                                Copiar link
+                              </>
+                            )}
+                          </Button>
                         </div>
-                        <Button
-                          size="sm"
-                          onClick={copiarLinkAfiliado}
-                          className="shrink-0 bg-emerald-600 hover:bg-emerald-700"
-                        >
-                          {linkCopiado ? (
-                            <>
-                              <Check className="mr-1.5 h-4 w-4" />
-                              Copiado
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="mr-1.5 h-4 w-4" />
-                              Copiar link
-                            </>
-                          )}
-                        </Button>
-                      </div>
 
-                      <div className="mt-3 flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={partilharWhatsApp}
-                          className="border-gray-200 text-xs text-gray-600 hover:bg-gray-50"
-                        >
-                          Partilhar no WhatsApp
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={partilharFacebook}
-                          className="border-gray-200 text-xs text-gray-600 hover:bg-gray-50"
-                        >
-                          Partilhar no Facebook
-                        </Button>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={partilharWhatsApp}
+                            className="border-gray-200 text-xs text-gray-600 hover:bg-gray-50"
+                          >
+                            Partilhar no WhatsApp
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={partilharFacebook}
+                            className="border-gray-200 text-xs text-gray-600 hover:bg-gray-50"
+                          >
+                            Partilhar no Facebook
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              </>
+                    )}
+                  </motion.div>
+                )}
+              </div>
             )}
 
             <Separator className="my-6" />
@@ -594,6 +638,28 @@ export default function PaginaProduto() {
                   </p>
                 ))}
               </div>
+            </div>
+
+            <Separator className="my-6" />
+
+            {/* Perguntas Frequentes */}
+            <div>
+              <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-900">
+                <HelpCircle className="h-4 w-4 text-emerald-600" />
+                Perguntas Frequentes
+              </h3>
+              <Accordion type="single" collapsible className="w-full">
+                {PERGUNTAS_FREQUENTES.map((item, indice) => (
+                  <AccordionItem key={indice} value={`faq-${indice}`}>
+                    <AccordionTrigger className="text-left text-sm font-medium text-gray-800 hover:no-underline">
+                      {item.pergunta}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-gray-600">
+                      {item.resposta}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
           </motion.div>
         </div>
