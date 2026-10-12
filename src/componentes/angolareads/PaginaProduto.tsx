@@ -65,7 +65,7 @@ const PERGUNTAS_FREQUENTES: { pergunta: string; resposta: string }[] = [
   {
     pergunta: 'Como é que pago o meu pedido?',
     resposta:
-      'Podes pagar por transferência bancária, Airtm ou PayPal. Ao confirmares o pedido na transferência bancária, mostramos-te o IBAN, o titular, o valor a pagar e a referência do pedido, que deves colocar na descrição da transferência.',
+      'Podes pagar por transferência bancária, Airtm ou PayPal. Ao confirmares o pedido na transferência bancária, mostramos-te o IBAN, o titular, o valor a pagar e a referência do pedido, que deves colocar na descrição da transferência. Depois, envias o comprovativo diretamente pelo site.',
   },
   {
     pergunta: 'Quando posso descarregar o ebook?',
@@ -85,7 +85,7 @@ const PERGUNTAS_FREQUENTES: { pergunta: string; resposta: string }[] = [
   {
     pergunta: 'Já paguei mas o ebook não aparece. O que faço?',
     resposta:
-      'Confirma que colocaste a referência do pedido na descrição da transferência e envia-nos o comprovativo para angolareads@gmail.com ou pelo WhatsApp +244 947 399 578, indicando a referência do pedido.',
+      'Vai a "Os Meus Ebooks", encontra o pedido pendente e carrega o comprovativo no botão "Enviar comprovativo". Se precisares de ajuda, o nosso suporte por email ou WhatsApp (+244 947 399 578) está disponível, mas o envio do comprovativo faz-se sempre pelo site.',
   },
 ]
 
@@ -517,25 +517,22 @@ export default function PaginaProduto() {
               )}
             </div>
 
-                        {/* Programa de Afiliados (recolhido por defeito) */}
+            {/* Programa de Afiliados (recolhido por defeito) */}
             {temComissaoAfiliado && (
-              <div className="mt-5">
+              <div className="mt-4">
                 <button
                   type="button"
                   onClick={lidarCliqueAfiliacao}
                   aria-expanded={mostrarAfiliacao}
                   aria-controls="painel-afiliacao"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/80 px-4 py-2.5 text-sm font-semibold text-emerald-800 shadow-sm transition-colors hover:bg-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:w-auto"
+                  className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
                 >
-                  <TrendingUp className="h-4 w-4 shrink-0" />
+                  <TrendingUp className="h-4 w-4" />
                   Afiliar-me a este produto
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 transition-transform ${mostrarAfiliacao ? 'rotate-180' : ''}`}
+                    className={`h-4 w-4 transition-transform ${mostrarAfiliacao ? 'rotate-180' : ''}`}
                   />
                 </button>
-                <p className="mt-1.5 text-xs text-gray-500">
-                  A comissão é só deste ebook. Noutros produtos a percentagem pode ser diferente.
-                </p>
 
                 {mostrarAfiliacao && estaAutenticado() && (
                   <motion.div
@@ -543,9 +540,10 @@ export default function PaginaProduto() {
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="mt-3 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4 sm:p-5"
+                    className="mt-2 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4 sm:p-5"
                   >
                     {!eAfiliado() ? (
+                      // Autenticado mas ainda não é afiliado
                       <div>
                         <p className="mb-3 text-sm text-gray-600">
                           Para ganhares comissão neste ebook, primeiro tens de ativar o
@@ -560,19 +558,12 @@ export default function PaginaProduto() {
                         </Button>
                       </div>
                     ) : (
+                      // Já é afiliado — comissão e link pessoal deste produto
                       <div>
-                        <p className="mb-1 text-sm font-medium text-emerald-900">
-                          Comissão deste produto
-                        </p>
                         <p className="mb-3 text-sm text-gray-700">
-                          Neste ebook ganhas <strong>{produto.comissaoAfiliado}%</strong> (≈{' '}
+                          Ganhas <strong>{produto.comissaoAfiliado}%</strong> (≈{' '}
                           <strong>{formatarPreco(valorComissaoEstimado)}</strong>) por cada
                           venda confirmada através do teu link.
-                        </p>
-                        <p className="mb-3 text-xs text-gray-500">
-                          Esta percentagem aplica-se apenas a este produto. Consulta cada
-                          ebook para veres a comissão respectiva — noutros títulos pode ser
-                          maior ou menor.
                         </p>
 
                         <div className="flex flex-col gap-2 sm:flex-row">
@@ -629,6 +620,7 @@ export default function PaginaProduto() {
                 )}
               </div>
             )}
+
             <Separator className="my-6" />
 
             {/* Descrição Completa */}

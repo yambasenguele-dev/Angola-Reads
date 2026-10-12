@@ -21,6 +21,7 @@ import { Separator } from '@/components/ui/separator'
 import { usarNavegacao } from '@/lojas/navegacao'
 import { usarAutenticacao } from '@/lojas/autenticacao'
 import { formatarPreco } from '@/lib/autenticacao'
+import UploadComprovativo from '@/componentes/angolareads/UploadComprovativo'
 
 // ============================================================
 // Tipos dos dados recebidos da API
@@ -37,6 +38,7 @@ interface Pedido {
   id: string
   referencia: string
   estado: string
+  metodoPagamento?: string
   total: number
   criadoEm: string
   produtos: ProdutoPedido[]
@@ -269,6 +271,12 @@ export default function OsMeusEbooks() {
             const IconeEstado = estadoInfo.icone
             const estaPago = pedido.estado === 'pago'
             const emAnalise = pedido.estado === 'pendente' && !!pedido.comprovativo
+            // Comprovativo pode ser enviado em transferência/Airtm: pedido pendente
+            // sem comprovativo, ou rejeitado (para reenviar um novo)
+            const aceitaComprovativo =
+              pedido.metodoPagamento !== 'paypal' &&
+              ((pedido.estado === 'pendente' && !pedido.comprovativo) ||
+                pedido.estado === 'rejeitado')
 
             return (
               <motion.div
@@ -425,15 +433,30 @@ export default function OsMeusEbooks() {
                           <Clock className="mr-1 inline h-3 w-3" />
                           {emAnalise
                             ? 'Comprovativo recebido — o teu pagamento está em análise. Normalmente confirmamos em poucas horas.'
-                            : 'A aguardar o envio do comprovativo de pagamento.'}
+                            : 'A aguardar o envio do comprovativo de pagamento. O download só fica disponível depois de confirmarmos o pagamento.'}
                         </p>
                       )}
                       {pedido.estado === 'rejeitado' && (
                         <p className="text-center text-xs text-red-600">
                           <XCircle className="mr-1 inline h-3 w-3" />
-                          Não foi possível confirmar este pagamento. Contacta o
-                          suporte se precisares de ajuda.
+                          Não foi possível confirmar este pagamento. Podes enviar um
+                          novo comprovativo abaixo ou contactar o suporte (opcional).
                         </p>
+                      )}
+
+                      {/* Enviar comprovativo pelo site */}
+                      {aceitaComprovativo && pedido.id && (
+                        <div className="mx-auto w-full max-w-sm">
+                          <UploadComprovativo
+                            pedidoId={pedido.id}
+                            rotuloBotao={
+                              pedido.estado === 'rejeitado'
+                                ? 'Enviar novo comprovativo'
+                                : 'Enviar comprovativo'
+                            }
+                            aoEnviar={buscarPedidos}
+                          />
+                        </div>
                       )}
                     </div>
                   </CardContent>

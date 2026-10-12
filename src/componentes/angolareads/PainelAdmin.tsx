@@ -147,6 +147,8 @@ interface Comprovativo {
   criadoEm: string
   pedido?: {
     referencia: string
+    perfil?: { nomeCompleto?: string; email?: string } | null
+    itens?: { titulo: string; formato: string; preco: number }[]
   }
 }
 
@@ -871,10 +873,21 @@ export default function PainelAdmin() {
 
   const alterarEstadoComprovativo = async (pedidoId: string, novoEstado: string) => {
     try {
+      // Ao rejeitar, pedir uma nota opcional que é enviada ao cliente por email
+      let observacoes: string | undefined
+      if (novoEstado === 'rejeitado') {
+        const nota = window.prompt(
+          'Motivo da rejeição (opcional). Será enviado ao cliente:',
+          ''
+        )
+        if (nota === null) return // admin cancelou
+        observacoes = nota.trim() || undefined
+      }
+
       const resposta = await fetch('/api/admin/comprovativos', {
         method: 'PATCH',
         headers: cabecalhosAutenticados(),
-        body: JSON.stringify({ pedidoId, estado: novoEstado }),
+        body: JSON.stringify({ pedidoId, estado: novoEstado, observacoes }),
       })
       if (!resposta.ok) throw new Error()
       toast.success(
@@ -1526,6 +1539,8 @@ export default function PainelAdmin() {
                   <TableHeader>
                     <TableRow className="bg-muted/50">
                       <TableHead>Pedido</TableHead>
+                      <TableHead className="hidden md:table-cell">Cliente</TableHead>
+                      <TableHead className="hidden sm:table-cell">Valor</TableHead>
                       <TableHead className="hidden sm:table-cell">Data</TableHead>
                       <TableHead>Ficheiro</TableHead>
                       <TableHead className="text-right">Ações</TableHead>
@@ -1534,7 +1549,7 @@ export default function PainelAdmin() {
                   <TableBody>
                     {comprovativos.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                           Nenhum comprovativo pendente
                         </TableCell>
                       </TableRow>
@@ -1545,6 +1560,19 @@ export default function PainelAdmin() {
                           <TableRow key={comp.id}>
                             <TableCell className="font-mono text-sm font-medium">
                               {comp.pedido?.referencia || comp.pedidoId}
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell text-sm">
+                              {comp.pedido?.perfil?.nomeCompleto || '—'}
+                              {comp.pedido?.perfil?.email && (
+                                <span className="block text-xs text-muted-foreground">
+                                  {comp.pedido.perfil.email}
+                                </span>
+                              )}
+                            </TableCell>
+                            <TableCell className="hidden sm:table-cell text-sm font-medium">
+                              {formatarMoeda(
+                                (comp.pedido?.itens || []).reduce((soma, i) => soma + Number(i.preco || 0), 0)
+                              )}
                             </TableCell>
                             <TableCell className="hidden sm:table-cell text-muted-foreground text-sm">
                               {formatarData(comp.criadoEm)}

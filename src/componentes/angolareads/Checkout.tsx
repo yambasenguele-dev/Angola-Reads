@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/dialog'
 import { usarCarrinho } from '@/lojas/carrinho'
 import { usarNavegacao } from '@/lojas/navegacao'
+import UploadComprovativo from '@/componentes/angolareads/UploadComprovativo'
 import { usarAutenticacao } from '@/lojas/autenticacao'
 import { formatarPreco } from '@/lib/autenticacao'
 import { obterCodigoAfiliadoActivo } from '@/lib/afiliado-ref'
@@ -81,6 +82,8 @@ export default function Checkout() {
   const [totalPedido, definirTotalPedido] = useState(0)
   const [metodoPedido, definirMetodoPedido] = useState<MetodoPagamento>('transferencia_bancaria')
   const [campoCopiado, definirCampoCopiado] = useState('')
+  const [pedidoIdCriado, definirPedidoIdCriado] = useState('')
+  const [comprovativoEnviado, definirComprovativoEnviado] = useState(false)
 
   const referenciaInput = useRef<HTMLInputElement>(null)
 
@@ -251,6 +254,7 @@ export default function Checkout() {
 
       // Sucesso! Guardar tudo o que o diálogo precisa ANTES de limpar o carrinho.
       definirReferenciaPedido(dadosPedido.referencia || dadosPedido.pedido?.referencia || '')
+      definirPedidoIdCriado(dadosPedido.pedido?.id || '')
       definirTotalPedido(total)
       definirMetodoPedido(metodoPagamento)
       definirPedidoCriado(true)
@@ -398,14 +402,27 @@ export default function Checkout() {
                   Na descrição da transferência coloca a referência do pedido:{' '}
                   <strong>{referenciaPedido}</strong>.
                 </p>
-                <p className="text-xs text-amber-800">
-                  Depois de pagares, envia o comprovativo para{' '}
-                  <strong>angolareads@gmail.com</strong> (ou pela página de Suporte).
-                </p>
                 <p className="text-xs font-semibold text-amber-900">
                   O download só fica disponível depois de confirmarmos o pagamento.
                 </p>
               </div>
+
+              {/* Envio do comprovativo diretamente pelo site */}
+              {pedidoIdCriado && (
+                <div className="mt-4 space-y-2">
+                  <h4 className="text-sm font-semibold text-gray-700">
+                    Já fizeste a transferência?
+                  </h4>
+                  <p className="text-xs text-gray-500">
+                    Envia aqui o comprovativo. Se preferires, podes enviá-lo mais
+                    tarde em "Os Meus Ebooks", no pedido {referenciaPedido}.
+                  </p>
+                  <UploadComprovativo
+                    pedidoId={pedidoIdCriado}
+                    aoEnviar={() => definirComprovativoEnviado(true)}
+                  />
+                </div>
+              )}
             </div>
           )}
 
@@ -424,7 +441,11 @@ export default function Checkout() {
               onClick={fecharSucesso}
               className="w-full rounded-xl bg-emerald-600 font-semibold text-white hover:bg-emerald-700 sm:w-auto sm:px-8"
             >
-              Já anotei os dados, voltar ao início
+              {comprovativoEnviado
+                ? 'Concluir'
+                : metodoPedido === 'transferencia_bancaria'
+                  ? 'Enviar comprovativo mais tarde'
+                  : 'Voltar ao início'}
             </Button>
           </DialogFooter>
         </DialogContent>
