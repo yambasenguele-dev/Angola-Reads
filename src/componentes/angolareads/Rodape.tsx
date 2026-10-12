@@ -125,7 +125,7 @@ export default function Rodape() {
               </h3>
               <div className="flex flex-col gap-3">
                 <a
-                  href="mailto:angolareads@gmail.com"
+                  href="mailto:suporte.angolareads@gmail.com"
                   className="flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-emerald-600"
                 >
                   <Mail className="h-4 w-4 shrink-0" />
