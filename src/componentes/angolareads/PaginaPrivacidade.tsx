@@ -172,8 +172,8 @@ Se tiver questões sobre alterações à nossa política de privacidade, não he
     icone: Phone,
     conteudo: `Para questões relacionadas com esta Política de Privacidade, ou para exercer qualquer dos seus direitos relativos aos seus dados pessoais, pode entrar em contacto connosco através dos seguintes canais:
 
-• Email: angolareads@gmail.com
-• WhatsApp: +244 947399578
+• Email: suporte.angolareads@gmail.com
+• WhatsApp: +244 956228902
 • Horário de atendimento: Segunda a Sexta-feira, das 08:00 às 18:00 (horário de Luanda)
 
 Reservamo-nos o direito de responder às solicitações num prazo razoável, geralmente dentro de 24 a 48 horas úteis. Para solicitações mais complexas, como pedidos de eliminação de dados, o prazo pode estender-se até 30 dias úteis.
