@@ -196,7 +196,7 @@ export default function PaginaSuporte() {
           <div className="grid gap-4 sm:grid-cols-2">
             {/* Email */}
             <motion.a
-              href="mailto:angolareads@gmail.com"
+              href="mailto:suporte.angolareads@gmail.com"
               whileHover={{ y: -4 }}
               transition={{ type: 'spring', stiffness: 300 }}
             >
@@ -222,7 +222,7 @@ export default function PaginaSuporte() {
 
             {/* WhatsApp */}
             <motion.a
-              href="https://wa.me/244947399578"
+              href="https://wa.me/244956228902"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ y: -4 }}
@@ -369,7 +369,7 @@ export default function PaginaSuporte() {
                   </Button>
                 </a>
                 <a
-                  href="https://wa.me/244947399578"
+                  href="https://wa.me/244956228902"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
