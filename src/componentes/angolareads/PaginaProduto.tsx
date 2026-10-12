@@ -85,7 +85,7 @@ const PERGUNTAS_FREQUENTES: { pergunta: string; resposta: string }[] = [
   {
     pergunta: 'Já paguei mas o ebook não aparece. O que faço?',
     resposta:
-      'Vai a "Os Meus Ebooks", encontra o pedido pendente e carrega o comprovativo no botão "Enviar comprovativo". Se precisares de ajuda, o nosso suporte por email ou WhatsApp (+244 947 399 578) está disponível, mas o envio do comprovativo faz-se sempre pelo site.',
+      'Vai a "Os Meus Ebooks", encontra o pedido pendente e carrega o comprovativo no botão "Enviar comprovativo". Se precisares de ajuda, o nosso suporte por email ou WhatsApp está disponível, mas o envio do comprovativo faz-se sempre pelo site.',
   },
 ]
 
