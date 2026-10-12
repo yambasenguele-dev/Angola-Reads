@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 
 // Número de WhatsApp do suporte (mesmo usado no resto do site)
-const NUMERO_WHATSAPP_SUPORTE = '244947399578'
+const NUMERO_WHATSAPP_SUPORTE = '244956228902'
 
 export default function BotaoWhatsAppFlutuante() {
   return (
