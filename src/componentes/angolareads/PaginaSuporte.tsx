@@ -213,7 +213,7 @@ export default function PaginaSuporte() {
                       Envia-nos um email e respondemos em até 24-48 horas úteis.
                     </p>
                     <p className="truncate text-sm font-medium text-emerald-600">
-                      angolareads@gmail.com
+                      suporte.angolareads@gmail.com
                     </p>
                   </div>
                 </CardContent>
@@ -241,7 +241,7 @@ export default function PaginaSuporte() {
                       Resposta rápida durante o horário de atendimento.
                     </p>
                     <p className="text-sm font-medium text-emerald-600">
-                      +244 947 399 578
+                      +244 956 228 902
                     </p>
                   </div>
                 </CardContent>
@@ -359,7 +359,7 @@ export default function PaginaSuporte() {
                 sempre prontos para te ajudar com qualquer questão.
               </p>
               <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a href="mailto:angolareads@gmail.com">
+                <a href="mailto:suporte.angolareads@gmail.com">
                   <Button
                     variant="secondary"
                     className="bg-white text-emerald-700 hover:bg-emerald-50"
