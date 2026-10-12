@@ -517,22 +517,25 @@ export default function PaginaProduto() {
               )}
             </div>
 
-            {/* Programa de Afiliados (recolhido por defeito) */}
+                        {/* Programa de Afiliados (recolhido por defeito) */}
             {temComissaoAfiliado && (
-              <div className="mt-4">
+              <div className="mt-5">
                 <button
                   type="button"
                   onClick={lidarCliqueAfiliacao}
                   aria-expanded={mostrarAfiliacao}
                   aria-controls="painel-afiliacao"
-                  className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/80 px-4 py-2.5 text-sm font-semibold text-emerald-800 shadow-sm transition-colors hover:bg-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:w-auto"
                 >
-                  <TrendingUp className="h-4 w-4" />
+                  <TrendingUp className="h-4 w-4 shrink-0" />
                   Afiliar-me a este produto
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${mostrarAfiliacao ? 'rotate-180' : ''}`}
+                    className={`h-4 w-4 shrink-0 transition-transform ${mostrarAfiliacao ? 'rotate-180' : ''}`}
                   />
                 </button>
+                <p className="mt-1.5 text-xs text-gray-500">
+                  A comissão é só deste ebook. Noutros produtos a percentagem pode ser diferente.
+                </p>
 
                 {mostrarAfiliacao && estaAutenticado() && (
                   <motion.div
@@ -540,10 +543,9 @@ export default function PaginaProduto() {
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="mt-2 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4 sm:p-5"
+                    className="mt-3 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4 sm:p-5"
                   >
                     {!eAfiliado() ? (
-                      // Autenticado mas ainda não é afiliado
                       <div>
                         <p className="mb-3 text-sm text-gray-600">
                           Para ganhares comissão neste ebook, primeiro tens de ativar o
@@ -558,12 +560,19 @@ export default function PaginaProduto() {
                         </Button>
                       </div>
                     ) : (
-                      // Já é afiliado — comissão e link pessoal deste produto
                       <div>
+                        <p className="mb-1 text-sm font-medium text-emerald-900">
+                          Comissão deste produto
+                        </p>
                         <p className="mb-3 text-sm text-gray-700">
-                          Ganhas <strong>{produto.comissaoAfiliado}%</strong> (≈{' '}
+                          Neste ebook ganhas <strong>{produto.comissaoAfiliado}%</strong> (≈{' '}
                           <strong>{formatarPreco(valorComissaoEstimado)}</strong>) por cada
                           venda confirmada através do teu link.
+                        </p>
+                        <p className="mb-3 text-xs text-gray-500">
+                          Esta percentagem aplica-se apenas a este produto. Consulta cada
+                          ebook para veres a comissão respectiva — noutros títulos pode ser
+                          maior ou menor.
                         </p>
 
                         <div className="flex flex-col gap-2 sm:flex-row">
@@ -620,7 +629,6 @@ export default function PaginaProduto() {
                 )}
               </div>
             )}
-
             <Separator className="my-6" />
 
             {/* Descrição Completa */}
