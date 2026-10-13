@@ -13,20 +13,32 @@ const inter = Inter({
 // Metadados SEO completos para AngolaReads
 export const metadata: Metadata = {
   title: {
-    default: "AngolaReads - Ebooks Digitais para Angolanos",
+    default: "AngolaReads - Ebooks Digitais para Angola",
     template: "%s | AngolaReads",
   },
   description:
     "Descobre ebooks que transformam a tua vida. Conhecimento prático, histórias poderosas e ferramentas digitais criadas especialmente para o público angolano e de língua portuguesa. Compra agora e começa a ler em segundos.",
   keywords: [
-    "ebooks angola",
-    "livros digitais angola",
-    "empreendedorismo angola",
-    "finanças pessoais angola",
-    "marketing digital angola",
-    "desenvolvimento pessoal",
+    "Angolareads",
+    "AngolaReads",
+    "Angola Reads",
+    "Angolareads site,
+    "Angolareads comprar",
+    "Angolareads ebook",
+    "Angolareads ebooks",
+    "Angolareads comprar ebook",
+    "Angolareads comprar ebooks",
+    "Melhores ebooks",
+    "Melhores ebooks angola",
+    "Melhores livros",
+    "Ebooks angola",
+    "Livros digitais angola",
+    "Empreendedorismo angola",
+    "Finanças pessoais angola",
+    "Marketing digital angola",
+    "Desenvolvimento pessoal",
     "angolareads",
-    "ebooks português",
+    "Ebooks português",
     "livros digitais",
   ],
   authors: [{ name: "AngolaReads" }],
@@ -37,7 +49,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "AngolaReads - Ebooks Digitais para Angolanos",
+    title: "AngolaReads - Ebooks Digitais para Angola",
     description:
       "Descobre ebooks que transformam a tua vida. Conhecimento prático, histórias poderosas e ferramentas digitais criadas especialmente para o público angolano.",
     url: "https://angolareads.vercel.app",
@@ -55,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AngolaReads - Ebooks Digitais para Angolanos",
+    title: "AngolaReads - Ebooks Digitais para Angola",
     description:
       "Descobre ebooks que transformam a tua vida. Conhecimento prático e ferramentas digitais para o público angolano.",
     images: ["/og-image.png"],
