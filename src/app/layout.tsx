@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     "angolareads",
     "Ebooks português",
     "livros digitais",
+    "Angolareads vercel",
   ],
   authors: [{ name: "AngolaReads" }],
   creator: "AngolaReads",
