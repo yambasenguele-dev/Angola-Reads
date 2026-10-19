@@ -22,6 +22,7 @@ import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
+import { caminhoProduto } from '@/lib/rotas'
 import {
   Accordion,
   AccordionContent,
@@ -85,7 +86,7 @@ const PERGUNTAS_FREQUENTES: { pergunta: string; resposta: string }[] = [
   {
     pergunta: 'Já paguei mas o ebook não aparece. O que faço?',
     resposta:
-      'Vai a "Os Meus Ebooks", encontra o pedido pendente e carrega o comprovativo no botão "Enviar comprovativo". Se precisares de ajuda, o nosso suporte por email ou WhatsApp está disponível, mas o envio do comprovativo faz-se sempre pelo site.',
+      'Vai a "Os Meus Ebooks", encontra o pedido pendente e carrega o comprovativo no botão "Enviar comprovativo". Se precisares de ajuda, o nosso suporte por email ou WhatsApp (+244 947 399 578) está disponível, mas o envio do comprovativo faz-se sempre pelo site.',
   },
 ]
 
@@ -135,6 +136,16 @@ export default function PaginaProduto() {
     if (estaNoCarrinho('epub')) formatos.add('epub')
     setFormatosAdicionados(formatos)
   }, [estaNoCarrinho])
+
+  // SEO: título do separador e URL canónico (/produto/titulo-uuid) assim que o produto carrega
+  useEffect(() => {
+    if (!produto) return
+    document.title = `${produto.titulo} – Comprar ebook | AngolaReads`
+    const caminho = caminhoProduto(produto.id, produto.titulo)
+    if (window.location.pathname !== caminho) {
+      window.history.replaceState(window.history.state, '', caminho + window.location.search)
+    }
+  }, [produto])
 
   // Buscar detalhes do produto
   useEffect(() => {
@@ -335,7 +346,9 @@ export default function PaginaProduto() {
               {produto.capaUrl ? (
                 <img
                   src={produto.capaUrl}
-                  alt={`Capa de ${produto.titulo}`}
+                  alt={`Capa do ebook ${produto.titulo}`}
+                  fetchPriority="high"
+                  decoding="async"
                   className="aspect-[3/4] w-full object-cover"
                 />
               ) : (
