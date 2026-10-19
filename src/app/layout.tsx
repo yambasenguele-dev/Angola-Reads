@@ -1,7 +1,9 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter } from 'next/font/google'
+import { preconnect } from 'react-dom'
 import { Toaster } from "sonner"
 import "./globals.css"
+import { URL_SITE, DESCRICAO_SITE } from "@/lib/seo"
 
 // Fonte principal - Inter para boa legibilidade em português
 const inter = Inter({
@@ -10,50 +12,46 @@ const inter = Inter({
   display: "swap",
 })
 
-// Metadados SEO completos para AngolaReads
+// Cor do browser no telemóvel + zoom correcto
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#065f46",
+}
+
+const TITULO_PADRAO = "AngolaReads | Loja de Ebooks em Angola — Compra e Descarrega"
+
+// Metadados SEO base do site. Cada rota (/produto/[id], /sobre, ...) define o seu
+// próprio title, description e canonical por cima destes valores.
 export const metadata: Metadata = {
+  metadataBase: new URL(URL_SITE),
   title: {
-    default: "AngolaReads - Ebooks Digitais para Angola",
+    default: TITULO_PADRAO,
     template: "%s | AngolaReads",
   },
-  description:
-    "Descobre ebooks que transformam a tua vida. Conhecimento prático, histórias poderosas e ferramentas digitais criadas especialmente para o público angolano e de língua portuguesa. Compra agora e começa a ler em segundos.",
+  description: DESCRICAO_SITE,
+  applicationName: "AngolaReads",
   keywords: [
-    "Angolareads",
-    "AngolaReads",
-    "Angola Reads",
-    "Angolareads site,
-    "Angolareads comprar",
-    "Angolareads ebook",
-    "Angolareads ebooks",
-    "Angolareads comprar ebook",
-    "Angolareads comprar ebooks",
-    "Melhores ebooks",
-    "Melhores ebooks angola",
-    "Melhores livros",
-    "Ebooks angola",
-    "Livros digitais angola",
-    "Empreendedorismo angola",
-    "Finanças pessoais angola",
-    "Marketing digital angola",
-    "Desenvolvimento pessoal",
+    "ebooks angola",
+    "livros digitais angola",
+    "comprar ebooks em angola",
+    "empreendedorismo angola",
+    "finanças pessoais angola",
+    "marketing digital angola",
+    "desenvolvimento pessoal",
     "angolareads",
-    "Ebooks português",
-    "livros digitais",
-    "Angolareads vercel",
+    "ebooks em português",
   ],
-  authors: [{ name: "AngolaReads" }],
+  authors: [{ name: "AngolaReads", url: URL_SITE }],
   creator: "AngolaReads",
   publisher: "AngolaReads",
-  metadataBase: new URL("https://angolareads.vercel.app"),
-  alternates: {
-    canonical: "/",
-  },
+  category: "books",
+  formatDetection: { email: false, address: false, telephone: false },
+  // O canonical é definido em cada página (nunca "/" para todas)
   openGraph: {
-    title: "AngolaReads - Ebooks Digitais para Angola",
-    description:
-      "Descobre ebooks que transformam a tua vida. Conhecimento prático, histórias poderosas e ferramentas digitais criadas especialmente para o público angolano.",
-    url: "https://angolareads.vercel.app",
+    title: TITULO_PADRAO,
+    description: DESCRICAO_SITE,
+    url: "/",
     siteName: "AngolaReads",
     type: "website",
     locale: "pt_AO",
@@ -68,9 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AngolaReads - Ebooks Digitais para Angola",
-    description:
-      "Descobre ebooks que transformam a tua vida. Conhecimento prático e ferramentas digitais para o público angolano.",
+    title: TITULO_PADRAO,
+    description: DESCRICAO_SITE,
     images: ["/og-image.png"],
   },
   robots: {
@@ -84,13 +81,18 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  // Ícones gerados a partir do logo (ficheiros em /public)
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
-      { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  verification: {
+    google: 'eY59hiTOzrl8LPhWgl9-evJwBYVsXBQJR4o9TGSvNX0',
   },
 }
 
@@ -99,6 +101,16 @@ export default function RaizLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // As capas dos ebooks vêm do Supabase Storage: abrir a ligação cedo melhora o LCP
+  const origemSupabase = process.env.NEXT_PUBLIC_SUPABASE_URL
+  if (origemSupabase) {
+    try {
+      preconnect(new URL(origemSupabase).origin)
+    } catch {
+      // URL inválido: ignorar
+    }
+  }
+
   return (
     <html lang="pt-AO" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
