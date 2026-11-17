@@ -11,6 +11,7 @@ import {
   Headphones,
 } from 'lucide-react'
 import { usarNavegacao } from '@/lojas/navegacao'
+import LinkVista from '@/componentes/angolareads/LinkVista'
 
 // Avaliações fictícias para o marquee
 const avaliacoes = [
@@ -105,14 +106,14 @@ export default function Rodape() {
                 {linksNavegacao.map((link) => {
                   const Icone = link.icone
                   return (
-                    <button
+                    <LinkVista
                       key={link.vista}
-                      onClick={() => navegarPara(link.vista)}
+                      vista={link.vista}
                       className="flex w-fit items-center gap-2 text-sm text-gray-500 transition-colors hover:text-emerald-600 focus:outline-none"
                     >
                       <Icone className="h-4 w-4" />
                       {link.etiqueta}
-                    </button>
+                    </LinkVista>
                   )
                 })}
               </nav>
@@ -125,7 +126,7 @@ export default function Rodape() {
               </h3>
               <div className="flex flex-col gap-3">
                 <a
-                  href="mailto:suporte.angolareads@gmail.com"
+                  href="mailto:angolareads@gmail.com"
                   className="flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-emerald-600"
                 >
                   <Mail className="h-4 w-4 shrink-0" />

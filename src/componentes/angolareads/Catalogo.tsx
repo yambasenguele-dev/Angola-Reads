@@ -355,13 +355,13 @@ export default function Catalogo() {
             </motion.div>
 
             {carregandoDestaque ? (
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
                 {Array.from({ length: 3 }).map((_, i) => (
                   <EsqueletoCartao key={`destaque-${i}`} />
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
                 {destaqueFiltrado.map((produto, indice) => (
                   <CartaoProduto
                     key={produto.id}
@@ -400,7 +400,7 @@ export default function Catalogo() {
 
           {/* Estado de carregamento */}
           {carregandoProdutos ? (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
               {Array.from({ length: 6 }).map((_, i) => (
                 <EsqueletoCartao key={`produto-${i}`} />
               ))}
@@ -432,7 +432,7 @@ export default function Catalogo() {
             </motion.div>
           ) : (
             /* Grelha de produtos */
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
               <AnimatePresence mode="popLayout">
                 {produtos.map((produto, indice) => (
                   <CartaoProduto

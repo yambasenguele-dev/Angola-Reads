@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { usarNavegacao } from '@/lojas/navegacao'
+import LinkVista from '@/componentes/angolareads/LinkVista'
 import { formatarPreco } from '@/lib/autenticacao'
 
 // Tipo do produto recebido como prop
@@ -118,11 +119,11 @@ export default function CartaoProduto({ produto, indice = 0 }: PropsCartaoProdut
             </Badge>
 
             {/* Título */}
-            <h3
-              className="line-clamp-2 cursor-pointer text-sm font-semibold leading-snug text-gray-900 transition-colors hover:text-emerald-700"
-              onClick={() => navegarPara('produto', produto.id)}
-            >
-              {produto.titulo}
+            <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-gray-900 transition-colors hover:text-emerald-700">
+              {/* Link real (rastreável pelo Google) que navega sem recarregar */}
+              <LinkVista vista="produto" id={produto.id} titulo={produto.titulo}>
+                {produto.titulo}
+              </LinkVista>
             </h3>
 
             {/* Descrição Curta */}
