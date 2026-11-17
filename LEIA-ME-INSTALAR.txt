@@ -1,0 +1,10 @@
+AngolaReads - SEO completo (rotas reais + sitemap + ícones)
+
+1) Extrai este ZIP na RAIZ do projecto (a pasta onde está o package.json),
+   aceitando substituir os ficheiros existentes. Os caminhos já estão certos.
+2) APAGA o ficheiro  public/robots.txt  (entra em conflito com src/app/robots.ts
+   e faz o build falhar).
+3) NAO existe nenhum page.tsx em src/app/api/... - o de produto vai em
+   src/app/produto/[id]/page.tsx (a pasta chama-se "produto", fora de "api").
+4) Na Vercel define NEXT_PUBLIC_SITE_URL=https://TEU-DOMINIO (sem barra no fim).
+5) git add -A && git commit && git push
