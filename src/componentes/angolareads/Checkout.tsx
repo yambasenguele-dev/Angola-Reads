@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/dialog'
 import { usarCarrinho } from '@/lojas/carrinho'
 import { usarNavegacao } from '@/lojas/navegacao'
+import CapaImagem from './CapaImagem'
 import UploadComprovativo from '@/componentes/angolareads/UploadComprovativo'
 import { usarAutenticacao } from '@/lojas/autenticacao'
 import { formatarPreco } from '@/lib/autenticacao'
@@ -820,12 +821,13 @@ export default function Checkout() {
                         className="flex items-start gap-3"
                       >
                         {/* Miniatura */}
-                        <div className="h-12 w-9 shrink-0 overflow-hidden rounded-md bg-gray-100">
+                        <div className="relative h-12 w-9 shrink-0 overflow-hidden rounded-md bg-gray-100">
                           {item.capaUrl ? (
-                            <img
+                            <CapaImagem
                               src={item.capaUrl}
                               alt={`Capa de ${item.titulo}`}
-                              className="h-full w-full object-cover"
+                              sizes="36px"
+                              className="object-cover"
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50">

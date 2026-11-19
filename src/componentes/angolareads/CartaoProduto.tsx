@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { usarNavegacao } from '@/lojas/navegacao'
 import LinkVista from '@/componentes/angolareads/LinkVista'
 import { formatarPreco } from '@/lib/autenticacao'
+import CapaImagem from './CapaImagem'
 
 // Tipo do produto recebido como prop
 interface CategoriaProduto {
@@ -29,6 +30,8 @@ interface ProdutoCard {
 interface PropsCartaoProduto {
   produto: ProdutoCard
   indice?: number
+  /** Primeiras capas visíveis sem scroll: carregam com prioridade */
+  prioridade?: boolean
 }
 
 // Mapeamento de tipos para etiquetas amigáveis
@@ -45,7 +48,7 @@ const coresTipo: Record<string, string> = {
   curso_limitado: 'bg-teal-100 text-teal-700 hover:bg-teal-100',
 }
 
-export default function CartaoProduto({ produto, indice = 0 }: PropsCartaoProduto) {
+export default function CartaoProduto({ produto, indice = 0, prioridade = false }: PropsCartaoProduto) {
   const navegarPara = usarNavegacao((s) => s.navegarPara)
   const temPromocao = produto.precoPromocional !== null && produto.precoPromocional > 0
   const precoFinal = temPromocao ? produto.precoPromocional : produto.precoNormal
@@ -70,15 +73,16 @@ export default function CartaoProduto({ produto, indice = 0 }: PropsCartaoProdut
         <Card className="group h-full overflow-hidden border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg hover:shadow-emerald-100/50">
           {/* Área da Capa */}
           <div
-            className="relative aspect-[3/4] max-h-[200px] w-full cursor-pointer overflow-hidden sm:max-h-[280px] md:max-h-none"
+            className="relative aspect-[3/4] max-h-[200px] w-full cursor-pointer overflow-hidden bg-gray-100 sm:max-h-[280px] md:max-h-none"
             onClick={() => navegarPara('produto', produto.id)}
           >
             {produto.capaUrl ? (
-              <motion.img
+              <CapaImagem
                 src={produto.capaUrl}
                 alt={`Capa de ${produto.titulo}`}
-                className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
+                sizes="(max-width: 767px) 50vw, 33vw"
+                prioridade={prioridade}
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50">

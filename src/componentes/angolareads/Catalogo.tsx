@@ -367,6 +367,7 @@ export default function Catalogo() {
                     key={produto.id}
                     produto={produto}
                     indice={indice}
+                    prioridade={indice < 2}
                   />
                 ))}
               </div>
@@ -439,6 +440,7 @@ export default function Catalogo() {
                     key={produto.id}
                     produto={produto}
                     indice={indice}
+                    prioridade={indice < 2 && destaqueFiltrado.length === 0}
                   />
                 ))}
               </AnimatePresence>

@@ -30,6 +30,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { toast } from 'sonner'
+import CapaImagem from './CapaImagem'
 import { usarNavegacao } from '@/lojas/navegacao'
 import { usarCarrinho, type ItemCarrinho } from '@/lojas/carrinho'
 import { usarAutenticacao } from '@/lojas/autenticacao'
@@ -344,13 +345,15 @@ export default function PaginaProduto() {
           >
             <div className="overflow-hidden rounded-2xl shadow-xl shadow-emerald-900/10">
               {produto.capaUrl ? (
-                <img
-                  src={produto.capaUrl}
-                  alt={`Capa do ebook ${produto.titulo}`}
-                  fetchPriority="high"
-                  decoding="async"
-                  className="aspect-[3/4] w-full object-cover"
-                />
+                <div className="relative aspect-[3/4] w-full bg-gray-100">
+                  <CapaImagem
+                    src={produto.capaUrl}
+                    alt={`Capa do ebook ${produto.titulo}`}
+                    sizes="(max-width: 384px) 100vw, 384px"
+                    prioridade
+                    className="object-cover"
+                  />
+                </div>
               ) : (
                 <div className="flex aspect-[3/4] w-full items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50">
                   <div className="flex flex-col items-center gap-4">

@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
 import { usarCarrinho } from '@/lojas/carrinho'
+import CapaImagem from './CapaImagem'
 import { usarNavegacao } from '@/lojas/navegacao'
 import { usarAutenticacao } from '@/lojas/autenticacao'
 import { formatarPreco } from '@/lib/autenticacao'
@@ -162,12 +163,13 @@ export default function Carrinho() {
                           {/* Miniatura + Título */}
                           <div className="flex min-w-0 flex-1 items-center gap-4">
                             {/* Capa em miniatura */}
-                            <div className="h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-gray-100 sm:h-20 sm:w-14">
+                            <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-gray-100 sm:h-20 sm:w-14">
                               {item.capaUrl ? (
-                                <img
+                                <CapaImagem
                                   src={item.capaUrl}
                                   alt={`Capa de ${item.titulo}`}
-                                  className="h-full w-full object-cover"
+                                  sizes="56px"
+                                  className="object-cover"
                                 />
                               ) : (
                                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50">
