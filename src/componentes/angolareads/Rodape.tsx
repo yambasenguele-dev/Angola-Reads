@@ -154,7 +154,7 @@ export default function Rodape() {
                     />
                   </div>
                   <span className="text-sm font-medium text-gray-600">
-                    Millennium Atlântico
+                    Millennium Atlântico / Transferência Bancária
                   </span>
                 </div>
 
