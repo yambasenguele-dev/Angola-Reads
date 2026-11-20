@@ -4,6 +4,7 @@ import { preconnect } from 'react-dom'
 import { Toaster } from "sonner"
 import "./globals.css"
 import { URL_SITE, DESCRICAO_SITE } from "@/lib/seo"
+import { https://angolareads.vercel.app, Ebooks Digitais para Angolanos } from "@/lib/seo"
 
 // Fonte principal - Inter para boa legibilidade em português
 const inter = Inter({
