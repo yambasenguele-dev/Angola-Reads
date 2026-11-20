@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 import { usarNavegacao } from '@/lojas/navegacao'
 import LinkVista from '@/componentes/angolareads/LinkVista'
-import { FaFacebook, FaInstagram, FaTiktok } from 'react-icons/fa6'
+import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa6'
 
 // Avaliações fictícias para o marquee
 const avaliacoes = [
@@ -133,13 +133,11 @@ export default function Rodape() {
                   <Mail className="h-4 w-4 shrink-0" />
                   <span>suporte.angolareads@gmail.com</span>
                 </a>
-                <p className="text-sm text-gray-500">
-                  Suporte via WhatsApp: usa o botão flutuante no canto do ecrã.
-                </p>
+                
                 {/* --- INÍCIO DAS REDES SOCIAIS --- */}
     <div className="flex items-center gap-4 mt-2">
       <a
-        href="https://facebook.com/teu-link-aqui" 
+        href="https://www.facebook.com/profile.php?id=61596934251460" 
         target="_blank" 
         rel="noopener noreferrer"
         className="text-gray-500 transition-colors hover:text-emerald-600"
@@ -149,7 +147,7 @@ export default function Rodape() {
       </a>
       
       <a
-        href="https://instagram.com/teu-link-aqui" 
+        href="https://instagram.com/angolareads?avpt=bzY2Nm5tMDg4NGN5" 
         target="_blank" 
         rel="noopener noreferrer"
         className="text-gray-500 transition-colors hover:text-emerald-600"
@@ -166,6 +164,15 @@ export default function Rodape() {
         aria-label="TikTok"
       >
         <FaTiktok className="h-5 w-5" />
+      </a>
+      <a
+        href="https://wa.me/244956228902"
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="text-gray-500 transition-colors hover:text-emerald-600"
+        aria-label="WhatsApp"
+      >
+        <FaWhatsapp className="h-5 w-5" />
       </a>
     </div>
     {/* --- FIM DAS REDES SOCIAIS --- */}
