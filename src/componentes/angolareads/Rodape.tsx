@@ -74,6 +74,27 @@ export default function Rodape() {
   return (
     <footer className="mt-auto w-full">
       {/* Seção principal do rodapé */}
+
+     {/* Seção do marquee com avaliações */}
+      <div className="overflow-hidden border-t border-emerald-200/60 bg-emerald-50/70 py-4">
+        <div className="pista-avaliacoes flex w-max gap-8">
+          {/* Duplicar o conteúdo para rolagem contínua sem lacunas */}
+          {[...avaliacoes, ...avaliacoes].map((avaliacao, indice) => (
+            <div
+              key={indice}
+              className="flex w-80 shrink-0 flex-col gap-1 rounded-lg border border-emerald-100 bg-white px-4 py-3 shadow-sm"
+            >
+              <p className="text-sm italic leading-relaxed text-gray-700">
+                &ldquo;{avaliacao.texto}&rdquo;
+              </p>
+              <p className="text-xs font-semibold text-emerald-700">
+                — {avaliacao.autor}, {avaliacao.local}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+      
       <div className="border-t border-emerald-100 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -229,26 +250,6 @@ export default function Rodape() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Seção do marquee com avaliações */}
-      <div className="overflow-hidden border-t border-emerald-200/60 bg-emerald-50/70 py-4">
-        <div className="pista-avaliacoes flex w-max gap-8">
-          {/* Duplicar o conteúdo para rolagem contínua sem lacunas */}
-          {[...avaliacoes, ...avaliacoes].map((avaliacao, indice) => (
-            <div
-              key={indice}
-              className="flex w-80 shrink-0 flex-col gap-1 rounded-lg border border-emerald-100 bg-white px-4 py-3 shadow-sm"
-            >
-              <p className="text-sm italic leading-relaxed text-gray-700">
-                &ldquo;{avaliacao.texto}&rdquo;
-              </p>
-              <p className="text-xs font-semibold text-emerald-700">
-                — {avaliacao.autor}, {avaliacao.local}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
 
