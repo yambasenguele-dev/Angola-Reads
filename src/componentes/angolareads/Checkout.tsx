@@ -316,7 +316,7 @@ export default function Checkout() {
             </DialogTitle>
             <DialogDescription className="text-gray-500">
               {metodoPedido === 'transferencia_bancaria'
-                ? 'Falta só fazeres a transferência. Os dados estão abaixo.'
+                ? 'Faltam só 2 passos: fazer a transferência e enviar o comprovativo.'
                 : 'O teu pedido foi registado e será analisado em breve.'}
             </DialogDescription>
           </DialogHeader>
@@ -347,9 +347,13 @@ export default function Checkout() {
           </div>
 
           {metodoPedido === 'transferencia_bancaria' && (
+            <>
             <div className="rounded-xl bg-gray-50 p-5">
-              <h3 className="mb-4 text-sm font-semibold text-gray-700">
-                Dados para Transferência Bancária
+              <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-300 text-xs font-bold text-white">
+                  1
+                </span>
+                Faz a transferência
               </h3>
               <div className="space-y-3">
                 <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
@@ -408,23 +412,35 @@ export default function Checkout() {
                 </p>
               </div>
 
-              {/* Envio do comprovativo diretamente pelo site */}
-              {pedidoIdCriado && (
-                <div className="mt-4 space-y-2">
-                  <h4 className="text-sm font-semibold text-gray-700">
-                    Já fizeste a transferência?
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    Envia aqui o comprovativo. Se preferires, podes enviá-lo mais
-                    tarde em "Os Meus Ebooks", no pedido {referenciaPedido}.
-                  </p>
-                  <UploadComprovativo
-                    pedidoId={pedidoIdCriado}
-                    aoEnviar={() => definirComprovativoEnviado(true)}
-                  />
-                </div>
-              )}
             </div>
+
+            {/* Passo 2: envio do comprovativo pelo site (destaque principal) */}
+            {pedidoIdCriado ? (
+              <div className="rounded-xl border-2 border-emerald-500 bg-white p-4 shadow-md shadow-emerald-100">
+                <div className="mb-1 flex items-center gap-2">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white">
+                    2
+                  </span>
+                  <h4 className="text-sm font-bold text-gray-900">
+                    Envia o comprovativo agora
+                  </h4>
+                </div>
+                <p className="mb-3 text-xs text-gray-600">
+                  É assim que confirmamos o teu pagamento e libertamos o download.
+                  Demora menos de um minuto.
+                </p>
+                <UploadComprovativo
+                  pedidoId={pedidoIdCriado}
+                  aoEnviar={() => definirComprovativoEnviado(true)}
+                />
+              </div>
+            ) : (
+              <p className="rounded-lg bg-emerald-50 p-3 text-xs text-emerald-800">
+                Depois de pagares, envia o comprovativo em "Os Meus Ebooks", no
+                pedido {referenciaPedido}.
+              </p>
+            )}
+            </>
           )}
 
           {metodoPedido !== 'transferencia_bancaria' && (
@@ -437,17 +453,24 @@ export default function Checkout() {
             </div>
           )}
 
-          <DialogFooter className="mt-2 sm:justify-center">
-            <Button
-              onClick={fecharSucesso}
-              className="w-full rounded-xl bg-emerald-600 font-semibold text-white hover:bg-emerald-700 sm:w-auto sm:px-8"
-            >
-              {comprovativoEnviado
-                ? 'Concluir'
-                : metodoPedido === 'transferencia_bancaria'
-                  ? 'Enviar comprovativo mais tarde'
-                  : 'Voltar ao início'}
-            </Button>
+          <DialogFooter className="mt-1 sm:justify-center">
+            {comprovativoEnviado || metodoPedido !== 'transferencia_bancaria' ? (
+              <Button
+                onClick={fecharSucesso}
+                className="w-full rounded-xl bg-emerald-600 font-semibold text-white hover:bg-emerald-700 sm:w-auto sm:px-8"
+              >
+                {comprovativoEnviado ? 'Concluir' : 'Voltar ao início'}
+              </Button>
+            ) : (
+              // Ação secundária e discreta: o foco é enviar o comprovativo já
+              <button
+                type="button"
+                onClick={fecharSucesso}
+                className="mx-auto text-xs text-gray-400 underline-offset-2 transition-colors hover:text-gray-600 hover:underline"
+              >
+                Concluir e enviar o comprovativo depois
+              </button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>

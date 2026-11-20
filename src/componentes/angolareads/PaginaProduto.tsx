@@ -535,18 +535,32 @@ export default function PaginaProduto() {
 
             {/* Programa de Afiliados (recolhido por defeito) */}
             {temComissaoAfiliado && (
-              <div className="mt-4">
+              <div className="mt-5">
                 <button
                   type="button"
                   onClick={lidarCliqueAfiliacao}
                   aria-expanded={mostrarAfiliacao}
                   aria-controls="painel-afiliacao"
-                  className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                  className="group flex w-full items-center gap-3 rounded-2xl border-2 border-emerald-500 bg-gradient-to-r from-emerald-50 to-amber-50 px-4 py-3 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-emerald-600 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
                 >
-                  <TrendingUp className="h-4 w-4" />
-                  Afiliar-me a este produto
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white shadow-sm">
+                    <TrendingUp className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex flex-wrap items-center gap-2">
+                      <span className="text-sm font-bold text-emerald-800 sm:text-base">
+                        Afiliar-me a este produto
+                      </span>
+                      <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-950">
+                        Ganha comissão
+                      </span>
+                    </span>
+                    <span className="mt-0.5 block text-xs text-gray-600">
+                      Partilha este ebook e recebe por cada venda confirmada.
+                    </span>
+                  </span>
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${mostrarAfiliacao ? 'rotate-180' : ''}`}
+                    className={`h-5 w-5 shrink-0 text-emerald-700 transition-transform ${mostrarAfiliacao ? 'rotate-180' : ''}`}
                   />
                 </button>
 
