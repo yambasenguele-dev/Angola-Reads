@@ -24,7 +24,7 @@ const TITULO_PADRAO = "AngolaReads | Loja de Ebooks em Angola — Compra e Desca
 // Metadados SEO base do site. Cada rota (/produto/[id], /sobre, ...) define o seu
 // próprio title, description e canonical por cima destes valores.
 export const metadata: Metadata = {
-  metadataBase: new URL(URL_SITE),
+  metadataBase: new URL(https://angolareads.vercel.app),
   title: {
     default: TITULO_PADRAO,
     template: "%s | AngolaReads",
@@ -32,6 +32,23 @@ export const metadata: Metadata = {
   description: DESCRICAO_SITE,
   applicationName: "AngolaReads",
   keywords: [
+    "AngolaReads",
+    "Angola Reads",
+    "Angolareads vercel",
+    "AngolaReads vercel",
+    "Angola reads vercel",
+    "AngolaRead",
+    "Angola",
+    "Angolano",
+    "Angolana",
+    "Livraria",
+    "Livraria digital",
+    "Ganhar dinheiro angola",
+    "Ganhar dinheiro",
+    "Ganhar como afiliado",
+    "Ebooks",
+    "AngolaRads",
+    "AngolaRad",
     "ebooks angola",
     "livros digitais angola",
     "comprar ebooks em angola",
@@ -42,15 +59,15 @@ export const metadata: Metadata = {
     "angolareads",
     "ebooks em português",
   ],
-  authors: [{ name: "AngolaReads", url: URL_SITE }],
+  authors: [{ name: "AngolaReads", url: https://angolareads.vercel.app }],
   creator: "AngolaReads",
   publisher: "AngolaReads",
   category: "books",
   formatDetection: { email: false, address: false, telephone: false },
   // O canonical é definido em cada página (nunca "/" para todas)
   openGraph: {
-    title: TITULO_PADRAO,
-    description: DESCRICAO_SITE,
+    title: "AngolaReads",
+    description: "Ebooks Digitais para Angolanos",
     url: "/",
     siteName: "AngolaReads",
     type: "website",
