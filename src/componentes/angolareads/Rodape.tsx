@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { usarNavegacao } from '@/lojas/navegacao'
 import LinkVista from '@/componentes/angolareads/LinkVista'
+import { FaFacebook, FaInstagram, FaTiktok } from 'react-icons/fa6'
 
 // Avaliações fictícias para o marquee
 const avaliacoes = [
@@ -126,7 +127,7 @@ export default function Rodape() {
               </h3>
               <div className="flex flex-col gap-3">
                 <a
-                  href="mailto:angolareads@gmail.com"
+                  href="mailto:suporte.angolareads@gmail.com"
                   className="flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-emerald-600"
                 >
                   <Mail className="h-4 w-4 shrink-0" />
@@ -135,6 +136,39 @@ export default function Rodape() {
                 <p className="text-sm text-gray-500">
                   Suporte via WhatsApp: usa o botão flutuante no canto do ecrã.
                 </p>
+                {/* --- INÍCIO DAS REDES SOCIAIS --- */}
+    <div className="flex items-center gap-4 mt-2">
+      <a
+        href="https://facebook.com/teu-link-aqui" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="text-gray-500 transition-colors hover:text-emerald-600"
+        aria-label="Facebook"
+      >
+        <FaFacebook className="h-5 w-5" />
+      </a>
+      
+      <a
+        href="https://instagram.com/teu-link-aqui" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="text-gray-500 transition-colors hover:text-emerald-600"
+        aria-label="Instagram"
+      >
+        <FaInstagram className="h-5 w-5" />
+      </a>
+      
+      <a
+        href="https://tiktok.com/@teu-link-aqui" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="text-gray-500 transition-colors hover:text-emerald-600"
+        aria-label="TikTok"
+      >
+        <FaTiktok className="h-5 w-5" />
+      </a>
+    </div>
+    {/* --- FIM DAS REDES SOCIAIS --- */}
               </div>
             </div>
 
