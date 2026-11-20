@@ -4,7 +4,6 @@ import { preconnect } from 'react-dom'
 import { Toaster } from "sonner"
 import "./globals.css"
 import { URL_SITE, DESCRICAO_SITE } from "@/lib/seo"
-import { https://angolareads.vercel.app, Ebooks Digitais para Angolanos } from "@/lib/seo"
 
 // Fonte principal - Inter para boa legibilidade em português
 const inter = Inter({
@@ -25,7 +24,7 @@ const TITULO_PADRAO = "AngolaReads | Loja de Ebooks em Angola — Compra e Desca
 // Metadados SEO base do site. Cada rota (/produto/[id], /sobre, ...) define o seu
 // próprio title, description e canonical por cima destes valores.
 export const metadata: Metadata = {
-  metadataBase: new URL(https://angolareads.vercel.app),
+  metadataBase: new URL(URL_SITE, https://angolareads.vercel.app),
   title: {
     default: TITULO_PADRAO,
     template: "%s | AngolaReads",
@@ -68,7 +67,7 @@ export const metadata: Metadata = {
   // O canonical é definido em cada página (nunca "/" para todas)
   openGraph: {
     title: "AngolaReads",
-    description: "Ebooks Digitais para Angolanos",
+    description: DESCRICAO_SITE,
     url: "/",
     siteName: "AngolaReads",
     type: "website",
